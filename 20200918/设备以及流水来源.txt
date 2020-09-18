@@ -1,7 +1,9 @@
 1、大华设备来源，或者是采集过程
-    python--->从大华拉去数据到zzc_yjyd表
+    python--->从大华拉取数据到zzc_yjyd表
     java定时任务DaHuaJcsstb----将zzc_yjyd同步到pzt_jcss_jb表中
 2、大华流水的来源或采集过程
 3、大华落地数据来源或采集过程
 3、芝立设备或来源采集过程
+    通过kittle直接从芝立的数据库将数据拉取过来
 4、芝立流水或来源采集过程
+    通过定时任务ZAXQ_ZL_PERSION与ZAXQ_ZL_VEHICLE将芝立的人脸和车辆数据铜同步到数据pzt_ry_rlzpjl和pzt_cl_crjl中
