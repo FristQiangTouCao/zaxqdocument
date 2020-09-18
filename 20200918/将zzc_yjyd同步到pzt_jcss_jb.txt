@@ -1,0 +1,5 @@
+将zzc_yjyd中tbbz='0'的数据同步到pzt_jcss_jb表中
+同步规则：
+1、sxjgnlx中包含'1'和'2'的数据进行同步，其他数据不处理。
+2、zzc_yjyd中的code字段对应pzt_jcss_jb表中的tdbm,全部更新到pzt_jcss_jb中
+3、根据sxjgnlx中同时包含‘1’和‘2’就判定为一体机
