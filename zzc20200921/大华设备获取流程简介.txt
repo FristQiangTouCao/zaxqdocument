@@ -1,0 +1,50 @@
+这是大华通过接口获取设备的流程简介，详细还是得看接口文档
+
+请求大华接口固定参数：
+	constant = 
+	{
+   		 'ip': '41.204.15.80',
+   		 'port': '8314',
+		'rl_user_name':  jcdjyjydrl
+   		'rl_password': jcdjyjdrl123
+		'cl_user_name':   jcdjyjydcl 
+   		'cl_password':  jcdjyjydcl123
+  		'client_type': 'winpc',
+   		'ip_address': '10.119.125.251',
+	}
+
+请求大华设备流程（详细请看文档）：
+	1. 第一次登陆，客户端只传用户名，服务端返回realm、readomKey和encryptType信息。
+	2. 第二次登录，客户端根据返回的信息，按照指定的加密算法md5计算签名，再带着用户名和签名登陆一次。
+	3.用户登录成功后，都是用token进行关联会话信息，为了避免出现token变更无法查找关联信息，可以使用会话保持接口，对 该token进行续租，保持持续有效。续租成功，请求方需要在下一次超时之前再次发起会话保活请求。
+	4.查询一机一档设备接口
+
+
+
+第一次登录接口：POST /videoService/accounts/authorize   创建会话时第一次返回401为正常现象
+		userName: 类型string，必填。用户名,最长32字节。
+		clientType: 类型string，必填。客户端类型。固定填 winpc 。
+		ipAddress: 类型string，选填。客户端的ip地址，用于日志审计。
+
+
+第二次登录接口：POST /videoService/accounts/authorize    第二次请求带上参数正常返回时能获得一个token，后续步骤需在请求头带上token进行请求
+		userName : 类型string，必填。用户名,最长32字节。
+ 		signature : 类型string，必填。根据签名计算方法得到的签名值。
+		 randomKey : 类型string，必填。随机密钥种子。
+		 encryptType : 类型string，必填。加密算法。
+		 clientType : 类型string，必填。客户端类型。
+ 		ipAddress : 类型string，选填。客户端ip地址，用于日志审计。
+
+
+会话保活接口： PUT /videoService/accounts/token/keepalive
+		token : 类型string，必填。创建会话返回的token值。
+
+一机一档设备查询接口：
+	查询请求：http://IP:PORT/ssms/Cameras/list
+	方法：POST
+	请求参数
+	{
+	"condition":{},
+	"page":1,
+	"pageSize":20
+	}
